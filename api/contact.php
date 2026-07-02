@@ -125,6 +125,8 @@ if (file_exists($phpmailerPath)) {
     require_once __DIR__ . '/../PHPMailer/src/SMTP.php';
     require_once __DIR__ . '/../PHPMailer/src/Exception.php';
 
+    // Capture SMTP conversation for diagnostics (only surfaced in the error response)
+    $smtpDebug = '';
     $mail = new PHPMailer\PHPMailer\PHPMailer(true);
     try {
         $mail->isSMTP();
@@ -134,6 +136,11 @@ if (file_exists($phpmailerPath)) {
         $mail->Username   = $SMTP_USER;
         $mail->Password   = $SMTP_PASS;
         $mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+        // Surface SMTP-level errors in the response for easier remote debugging
+        $mail->SMTPDebug  = PHPMailer\PHPMailer\SMTP::DEBUG_CONNECTION;
+        $mail->Debugoutput = function($str, $level) use (&$smtpDebug) {
+            $smtpDebug .= $str . "\n";
+        };
 
         $mail->setFrom($FROM_ADDR, $FROM_NAME);
         $mail->addAddress($NOTIFY_TO);
@@ -149,21 +156,37 @@ if (file_exists($phpmailerPath)) {
     } catch (Exception $ex) {
         http_response_code(500);
         error_log('Contact form mail error: ' . $ex->getMessage());
-        echo json_encode(['ok' => false, 'error' => 'Unable to send email.']);
+        // Return the specific error + SMTP trace so the cause is visible remotely
+        echo json_encode([
+            'ok' => false,
+            'error' => $ex->getMessage(),
+            'smtp_trace' => $smtpDebug,
+            'method' => 'PHPMailer+SMTP',
+        ]);
     }
     exit;
 }
 
-/* ---------- Fallback: PHP mail() ---------- */
+/* ---------- Fallback: PHP mail() ----------
+   Used when PHPMailer is not installed. On most cPanel hosts this routes
+   through the local sendmail/exim and should work — but may land in spam. */
 $headers = [
     'MIME-Version: 1.0',
     'Content-Type: text/html; charset=UTF-8',
     'From: ' . $FROM_NAME . ' <' . $FROM_ADDR . '>',
     'Reply-To: ' . $fullName . ' <' . $b['email'] . '>',
 ];
-if (@mail($NOTIFY_TO, $subject, $html, implode("\r\n", $headers))) {
-    echo json_encode(['ok' => true]);
+$sent = @mail($NOTIFY_TO, $subject, $html, implode("\r\n", $headers));
+if ($sent) {
+    echo json_encode(['ok' => true, 'method' => 'PHP mail()']);
 } else {
     http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => 'Unable to send email.']);
+    $lastErr = error_get_last();
+    echo json_encode([
+        'ok' => false,
+        'error' => 'mail() failed',
+        'php_error' => $lastErr ? $lastErr['message'] : 'unknown',
+        'hint' => 'PHPMailer not found at /PHPMailer/src/. Upload it to enable SMTP via SparkPost.',
+        'method' => 'PHP mail() fallback',
+    ]);
 }

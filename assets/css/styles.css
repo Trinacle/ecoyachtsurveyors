@@ -263,18 +263,19 @@ strong { color: var(--text); }
 .hero .btn--ghost,
 .cta-band .btn--ghost,
 .conservation .btn--ghost {
-  --btn-bg: rgba(246,239,223,.14);
-  --btn-fg: #ffffff;
-  border-color: rgba(246,239,223,.55);
+  --btn-bg: #132335;                 /* deep blue background */
+  --btn-fg: #ffffff;                 /* white text */
+  border-color: #ffffff;             /* white border */
 }
 .on-dark .btn--ghost:hover,
 .hero .btn--ghost:hover,
 .cta-band .btn--ghost:hover,
 .conservation .btn--ghost:hover {
-  --btn-bg: rgba(246,239,223,.22);
-  border-color: #f6efdf;
-  color: #f6efdf;
+  --btn-bg: #1a3354;                 /* lighter blue on hover */
+  border-color: #ffffff;
+  color: #ffffff;
 }
+/* In LIGHT mode, the same ghost-on-dark treatment applies (CTA bands are dark in both themes) */
 .btn--block { width: 100%; }
 .btn-lg { padding: .95rem 1.85rem; font-size: .98rem; }
 .btn-sm { padding: .55rem 1.05rem; font-size: .82rem; }

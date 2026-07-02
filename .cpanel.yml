@@ -1,0 +1,10 @@
+---
+deployment:
+  tasks:
+    # cPanel Git deploy: copy the repo into the live document root.
+    # Edit DEPLOY_TO below to match your real public_html path.
+    - export DEPLOY_TO=/home1/thefindg/public_html
+    # Exclude files that should never reach the live docroot
+    - /bin/rm -rf $DEPLOYTO/node_modules 2>/dev/null || true
+    # Sync repo contents (without .git) into the docroot
+    - /usr/bin/rsync -a --delete --exclude='.git' --exclude='node_modules' --exclude='.env' ./ $DEPLOY_TO/
