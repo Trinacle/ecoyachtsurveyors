@@ -1,0 +1,28 @@
+name: Deploy to Bluehost
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH pull + rsync to public_html
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.BLUEHOST_SSH_HOST }}
+          username: ${{ secrets.BLUEHOST_SSH_USER }}
+          key: ${{ secrets.BLUEHOST_SSH_KEY }}
+          passphrase: ${{ secrets.BLUEHOST_SSH_PASSPHRASE }}
+          port: 22
+          script: |
+            set -e
+            REPO=/home1/thefindg/public_html/website_dcfdfd37
+            DEPLOY_TO=/home1/thefindg/public_html
+            cd "$REPO"
+            git fetch origin
+            git merge --ff-only origin/main
+            /bin/rm -rf "$DEPLOY_TO/node_modules" 2>/dev/null || true
+            /usr/bin/rsync -a --delete --exclude='.git' --exclude='node_modules' --exclude='.env' ./ "$DEPLOY_TO/"
