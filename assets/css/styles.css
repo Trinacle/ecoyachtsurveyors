@@ -231,7 +231,7 @@ strong { color: var(--text); }
 }
 [data-theme="dark"] .btn {
   --btn-bg: #ffffff;            /* white in dark mode */
-  --btn-fg: #111111;
+  --btn-fg: #111111;            /* DARK text on white — always */
 }
 .btn svg { width: 17px; height: 17px; }
 .btn:hover { transform: translateY(-1px); }
@@ -244,13 +244,12 @@ strong { color: var(--text); }
 [data-theme="dark"] .btn--ghost { --btn-fg: var(--heading); }
 .btn--ghost:hover { border-color: var(--text); color: var(--text); }
 .btn--light {
+  /* btn--light = a light/white button. In BOTH themes it is white bg + dark text.
+     This keeps it readable on dark backgrounds like the footer and dark CTAs. */
   --btn-bg: #ffffff;
   --btn-fg: #111111;
 }
-[data-theme="dark"] .btn--light {
-  --btn-bg: #111111;
-  --btn-fg: #ffffff;
-}
+/* Keep dark-mode btn--light white (do NOT invert to dark) */
 /* Over dark hero imagery, primary buttons stay white for contrast.
    We force the dark-theme look (white bg / black text) regardless of theme. */
 .on-dark .btn:not(.btn--ghost),
