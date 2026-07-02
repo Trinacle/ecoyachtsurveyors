@@ -8,6 +8,10 @@ RewriteEngine On
 # --- Contact form API -> PHP handler ---
 RewriteRule ^api/contact$ api/contact.php [L]
 
+# --- Services overview: /services/ collides with the services/ subdirectory
+# (which holds the individual service pages, no index.html of its own) ---
+RewriteRule ^services/$ services.html [L]
+
 # --- Force https + canonical domain (uncomment when live) ---
 # RewriteCond %{HTTPS} off [OR]
 # RewriteCond %{HTTP_HOST} !^www\. [NC]

@@ -470,7 +470,7 @@ footer .brand-logo--dark { display: block; }
   overflow-y: auto;
 }
 .mobile-menu.open { transform: translateX(0); }
-.mobile-menu a {
+.mobile-menu a:not(.btn) {
   padding: .9rem .2rem;
   font-family: var(--font-serif);
   font-size: 1.5rem;
