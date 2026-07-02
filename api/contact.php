@@ -4,18 +4,41 @@
  *
  * POST a JSON body to /api/contact  (the .htaccess maps it here).
  * Validates the lead, builds an HTML email, and sends it to the office inbox
- * via SparkPost SMTP using the PHPMailer library.
+ * via SparkPost SMTP.
  *
- * Exposed via .htaccess:
- *   RewriteRule ^api/contact$ api/contact.php [L]
+ * Configuration is loaded from .env in the project root — NO secrets live
+ * in this file. Create a .env like:
  *
- * Requires PHPMailer. Easiest install on cPanel:
- *   - Upload the PHPMailer folder to /PHPMailer/  (get it from github.com/PHPMailer/PHPMailer)
- *   OR ask your host to enable the `smtp` mailer and use PHP's mail() fallback below.
+ *   NOTIFY_TO=admin@ecoyachtsurveyors.com
+ *   FROM_ADDRESS=no-reply@ecoyachtsurveyors.com
+ *   FROM_NAME=Eco Yacht Surveyors Website
+ *   SMTP_HOST=smtp.sparkpostmail.com
+ *   SMTP_PORT=587
+ *   SMTP_USER=SMTP_Injection
+ *   SMTP_PASS=your-sparkpost-key-here
  */
 
 declare(strict_types=1);
 header('Content-Type: application/json; charset=utf-8');
+
+/* ---------- Load .env (simple parser, no dependency needed) ---------- */
+function load_env(string $path): void {
+    if (!file_exists($path)) return;
+    foreach (file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+        $line = trim($line);
+        if ($line === '' || $line[0] === '#') continue;
+        if (!str_contains($line, '=')) continue;
+        [$k, $v] = explode('=', $line, 2);
+        $k = trim($k); $v = trim($v);
+        // strip surrounding quotes
+        if (strlen($v) >= 2 && ($v[0] === '"' || $v[0] === "'") && $v[-1] === $v[0]) {
+            $v = substr($v, 1, -1);
+        }
+        putenv("$k=$v");
+        $_ENV[$k] = $v;
+    }
+}
+load_env(__DIR__ . '/../.env');
 
 /* ---------- Read JSON body ---------- */
 $raw = file_get_contents('php://input');
@@ -38,14 +61,21 @@ if (!filter_var($b['email'] ?? '', FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-/* ---------- Config ---------- */
-$NOTIFY_TO = 'admin@ecoyachtsurveyors.com';
-$FROM_ADDR = 'no-reply@ecoyachtsurveyors.com';   // must be a SparkPost-verified domain
-$FROM_NAME = 'Eco Yacht Surveyors Website';
-$SMTP_HOST = 'smtp.sparkpostmail.com';
-$SMTP_PORT = 587;
-$SMTP_USER = 'SMTP_Injection';
-$SMTP_PASS = 'REDACTED-ROTATED';
+/* ---------- Config (from .env) ---------- */
+$NOTIFY_TO = getenv('NOTIFY_TO') ?: 'admin@ecoyachtsurveyors.com';
+$FROM_ADDR = getenv('FROM_ADDRESS') ?: 'no-reply@ecoyachtsurveyors.com';
+$FROM_NAME = getenv('FROM_NAME') ?: 'Eco Yacht Surveyors Website';
+$SMTP_HOST = getenv('SMTP_HOST') ?: 'smtp.sparkpostmail.com';
+$SMTP_PORT = (int)(getenv('SMTP_PORT') ?: 587);
+$SMTP_USER = getenv('SMTP_USER') ?: 'SMTP_Injection';
+$SMTP_PASS = getenv('SMTP_PASS') ?: '';
+
+if ($SMTP_PASS === '') {
+    http_response_code(500);
+    error_log('Contact form: SMTP_PASS not set in .env');
+    echo json_encode(['ok' => false, 'error' => 'Server not configured (SMTP_PASS missing).']);
+    exit;
+}
 
 /* ---------- Build the email ---------- */
 function e(?string $s): string { return htmlspecialchars((string)($s ?? ''), ENT_QUOTES, 'UTF-8'); }
