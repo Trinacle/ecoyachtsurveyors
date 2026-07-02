@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Environment / secrets — NEVER commit
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Temp build helpers (already removed, but ignore if regenerated)
+_*.py

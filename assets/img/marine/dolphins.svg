@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustrated dolphins leaping with a motor yacht in the background">
+  <defs>
+    <linearGradient id="sky-d" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9ec7dd"/>
+      <stop offset="1" stop-color="#eaf3f9"/>
+    </linearGradient>
+    <linearGradient id="sea-d" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2e6082"/>
+      <stop offset="1" stop-color="#0c2138"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky-d)"/>
+  <rect y="600" width="1600" height="300" fill="url(#sea-d)"/>
+  <rect y="588" width="1600" height="36" fill="#eaf3f9" opacity="0.45"/>
+  <!-- background yacht -->
+  <g opacity="0.6" transform="translate(1120,540)">
+    <polygon points="0,70 180,70 150,95 30,95" fill="#101a26"/>
+    <rect x="55" y="10" width="70" height="60" fill="#101a26"/>
+    <rect x="70" y="22" width="40" height="22" fill="#dfc398"/>
+    <polygon points="55,10 55,-50 5,10" fill="#f4f7fa"/>
+    <polygon points="125,10 125,-36 175,10" fill="#f4f7fa"/>
+    <line x1="90" y1="-50" x2="90" y2="-88" stroke="#101a26" stroke-width="3"/>
+  </g>
+  <!-- dolphin 1 -->
+  <g transform="translate(620,420) rotate(-22)">
+    <path d="M0,0 C30,-30 110,-30 170,-10 C210,2 230,20 220,40 C200,30 150,28 110,34 C60,42 20,40 -10,30 C-40,22 -50,40 -90,30 C-120,22 -130,8 -120,-6 C-100,-2 -60,-8 -30,-8 C-10,-8 0,-4 0,0 Z" fill="#3a5566"/>
+    <path d="M-118,-4 C-150,-20 -185,-14 -190,2 C-165,0 -140,6 -120,2 Z" fill="#2c4250"/>
+    <path d="M180,30 C220,28 250,18 268,2 C244,14 210,22 180,22 Z" fill="#2c4250"/>
+    <circle cx="-86" cy="-6" r="6" fill="#0d141c"/>
+    <circle cx="-84" cy="-8" r="2" fill="#dfc398"/>
+    <path d="M-30,18 C10,28 60,30 110,26" stroke="#cfe2ef" stroke-width="4" fill="none" opacity="0.7"/>
+  </g>
+  <!-- dolphin 2 -->
+  <g transform="translate(360,500) rotate(12)">
+    <path d="M0,0 C24,-22 86,-22 132,-6 C162,4 176,18 168,32 C152,22 116,22 86,28 C46,34 16,32 -8,24 C-32,18 -40,32 -70,24 C-94,18 -100,6 -92,-4 C-76,-2 -46,-6 -22,-6 C-6,-6 0,-2 0,0 Z" fill="#4a6678"/>
+    <path d="M140,24 C172,22 196,14 210,2 C190,12 162,18 140,18 Z" fill="#36505f"/>
+    <circle cx="-66" cy="-4" r="5" fill="#0d141c"/>
+    <circle cx="-64" cy="-6" r="1.6" fill="#dfc398"/>
+  </g>
+  <!-- splashes -->
+  <g fill="#eaf3f9" opacity="0.8">
+    <ellipse cx="520" cy="612" rx="120" ry="16"/>
+    <ellipse cx="300" cy="608" rx="90" ry="13"/>
+    <circle cx="700" cy="595" r="5"/>
+    <circle cx="220" cy="590" r="4"/>
+  </g>
+  <g stroke="#3a6788" stroke-width="3" fill="none" opacity="0.5">
+    <path d="M0,760 q70,-14 140,0 t140,0 t140,0 t140,0 t140,0 t140,0 t140,0 t140,0 t140,0 t140,0 t140,0"/>
+    <path d="M0,820 q90,-16 180,0 t180,0 t180,0 t180,0 t180,0 t180,0 t180,0 t180,0 t180,0"/>
+  </g>
+  <text x="40" y="860" font-family="Inter,sans-serif" font-size="20" fill="#dfc398" opacity="0.85">Marine life — placeholder illustration</text>
+</svg>

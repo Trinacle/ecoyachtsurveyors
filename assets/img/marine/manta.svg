@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustrated manta ray gliding over reef with a yacht at anchor above">
+  <defs>
+    <linearGradient id="water-m" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5aa6c9"/>
+      <stop offset="0.55" stop-color="#225b80"/>
+      <stop offset="1" stop-color="#08223a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#water-m)"/>
+  <g opacity="0.16" fill="#eaf3f9">
+    <polygon points="200,0 250,0 360,900 280,900"/>
+    <polygon points="700,0 745,0 830,900 760,900"/>
+    <polygon points="1100,0 1140,0 1220,900 1150,900"/>
+  </g>
+  <!-- yacht at anchor on surface -->
+  <g opacity="0.45" transform="translate(560,-20)">
+    <polygon points="0,80 200,80 165,108 35,108" fill="#0a1726"/>
+    <rect x="60" y="50" width="80" height="30" fill="#0a1726"/>
+    <rect x="78" y="60" width="44" height="16" fill="#dfc398"/>
+    <polygon points="60,50 60,-10 8,50" fill="#f4f7fa"/>
+    <polygon points="140,50 140,-4 190,50" fill="#f4f7fa"/>
+  </g>
+  <rect y="118" width="1600" height="5" fill="#9ec7dd" opacity="0.4"/>
+  <!-- manta ray -->
+  <g transform="translate(820,480) rotate(6)">
+    <path d="M0,0 C-60,-70 -220,-110 -360,-90 C-330,-40 -240,-10 -150,10 C-60,30 -20,40 0,40 Z" fill="#1a2a3c"/>
+    <path d="M0,0 C60,-70 220,-110 360,-90 C330,-40 240,-10 150,10 C60,30 20,40 0,40 Z" fill="#1a2a3c"/>
+    <path d="M0,40 C-30,80 -50,150 -60,210 C-30,180 -10,140 0,90 Z" fill="#1a2a3c"/>
+    <path d="M0,40 C30,80 50,150 60,210 C30,180 10,140 0,90 Z" fill="#1a2a3c"/>
+    <!-- head fins -->
+    <path d="M-40,0 C-90,-30 -120,-20 -130,0 C-100,-2 -70,6 -45,14 Z" fill="#24384e"/>
+    <path d="M40,0 C90,-30 120,-20 130,0 C100,-2 70,6 45,14 Z" fill="#24384e"/>
+    <!-- belly spots -->
+    <circle cx="-80" cy="-20" r="6" fill="#34506b" opacity="0.8"/>
+    <circle cx="80" cy="-20" r="6" fill="#34506b" opacity="0.8"/>
+    <circle cx="-150" cy="-30" r="5" fill="#34506b" opacity="0.8"/>
+    <circle cx="150" cy="-30" r="5" fill="#34506b" opacity="0.8"/>
+    <!-- tail -->
+    <line x1="0" y1="210" x2="0" y2="340" stroke="#1a2a3c" stroke-width="8"/>
+  </g>
+  <!-- reef silhouette -->
+  <g fill="#0a1d2e" opacity="0.85">
+    <path d="M0,900 L0,780 C120,740 200,800 320,760 C440,720 540,800 660,770 C780,740 880,800 1000,760 C1120,720 1240,790 1380,760 C1480,738 1560,780 1600,800 L1600,900 Z"/>
+  </g>
+  <text x="40" y="870" font-family="Inter,sans-serif" font-size="20" fill="#dfc398" opacity="0.85">Marine life — placeholder illustration</text>
+</svg>

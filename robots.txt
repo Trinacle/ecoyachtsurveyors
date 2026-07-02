@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block nothing — all pages are indexable except the 404 (handled via meta robots)
+Disallow: /404.html
+
+# Sitemap
+Sitemap: https://ecoyachtsurveyors.com/sitemap.xml
